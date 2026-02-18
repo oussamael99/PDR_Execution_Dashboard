@@ -126,7 +126,7 @@ with col_left:
     fig_bar = px.bar(
         df_filtered.groupby("Province")["Budget_DH"].sum().reset_index(),
         x="Budget_DH", y="Province", orientation="h",
-        color="Budget_DH", color_continuous_scale="Blues",
+        color="Budget_DH", color_continuous_scale="Viridis",
         text_auto=".2s"
     )
     st.plotly_chart(fig_bar, use_container_width=True)
@@ -142,3 +142,20 @@ with col_right:
         title="Dispersion de l'avancement des projets par secteur"
     )
     st.plotly_chart(fig_box, use_container_width=True)
+
+col_left2, = st.columns(1)
+
+with col_left2:
+    st.subheader("🏗️ État d'Avancement des Projets")
+    # A Pie Chart showing project status (Blocked, Done, In Progress)
+    fig_status = px.pie(
+        df_filtered,
+        names="Statut",
+        title="Répartition des Projets par Statut",
+        color_discrete_sequence=px.colors.sequential.RdBu
+    )
+    st.plotly_chart(fig_status, use_container_width=True)
+
+st.subheader("📋 Liste Détaillée des Projets")
+st.dataframe(df_filtered)
+
